@@ -1,0 +1,40 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# dotenv environment variables file
+.env
+
+# Directory for temporary files and caches
+tmp/
+temp/
+*.tmp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor specific files
+.vscode/
+.idea/
+
+# npm specific files
+package-lock.json
+
+# Optional - if you're deploying on Render and don't want dev Docker setup files
+.dockerignore
+
+# Optional - if your repo uses specific tests or coverage reports
+coverage/
