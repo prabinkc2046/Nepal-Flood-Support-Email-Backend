@@ -68,6 +68,7 @@ app.post('/send-email', (req, res) => {
 // to handle contact detail and message from contributor
 app.post('/send-message', (req, res) => {
   const { name, email, message } = req.body;
+
   // Create the HTML email content
   const mailContent = `
     <h2>New Contributor Message</h2>
@@ -83,16 +84,16 @@ app.post('/send-message', (req, res) => {
     to: process.env.ADMIN_EMAIL,
     replyTo: email,
     subject: `New Message from Contributor: ${name}`,
-    html: mailContent, // Use HTML content
+    html: mailContent,
   };
 
   // Send the email
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error('Error sending contact email:', error);
-      return res.status(500).send('Failed to send contact details.');
+      return res.status(500).json({ error: 'Failed to send contact details.' });
     }
-    res.status(200).send('Contact details sent successfully!');
+    return res.status(200).json({ message: 'Contact details sent successfully!' });
   });
 });
 
