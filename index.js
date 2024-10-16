@@ -38,7 +38,7 @@ app.post('/send-email', (req, res) => {
   // Create the email message with donor data
   const mailContent = `
     New Donation Details:
-    ---------------------
+    ------------------------------
     Name: ${first_name} ${last_name}
     Email: ${email}
     Amount Donated: $${amount}
@@ -62,6 +62,37 @@ app.post('/send-email', (req, res) => {
       return res.status(500).send('Failed to send donation details.');
     }
     res.status(200).send('Donation details sent successfully!');
+  });
+});
+
+// to handle contact detail and message from contributor
+app.post('send-message', (req, res) => {
+  const { name, email, message } = req.body;
+  // Create the HTML email content
+  const mailContent = `
+    <h2>New Contributor Message</h2>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Message:</strong> ${
+      message ? message : 'No message provided'
+    }</p>
+  `;
+
+  const mailOptions = {
+    from: email,
+    to: process.env.ADMIN_EMAIL,
+    replyTo: email,
+    subject: `New Message from Contributor: ${name}`,
+    html: mailContent, // Use HTML content
+  };
+
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending contact email:', error);
+      return res.status(500).send('Failed to send contact details.');
+    }
+    res.status(200).send('Contact details sent successfully!');
   });
 });
 
