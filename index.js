@@ -66,7 +66,7 @@ app.post('/send-email', (req, res) => {
 });
 
 // to handle contact detail and message from contributor
-app.post('send-message', (req, res) => {
+app.post('/send-message', (req, res) => {
   const { name, email, message } = req.body;
   // Create the HTML email content
   const mailContent = `
