@@ -35,56 +35,66 @@ app.post('/send-email', (req, res) => {
     publish_name,
   } = req.body;
 
+  // Use "Valued Donor" if first_name is not provided
+  const donorFirstName = first_name || 'Valued Donor';
+
+  // Format the donation date in a user-friendly format (e.g., "October 1, 2024")
+  const formattedDate = moment(date).format('MMMM D, YYYY');
+
   // Create the email content for admin (plain text)
   const adminMailContent = `
     New Donation Received:
     ------------------------------------
-    Name: ${first_name} ${last_name}
+    Name: ${donorFirstName} ${last_name || ''}
     Email: ${email}
     Amount Donated: $${amount}
     Message: ${thoughts ? thoughts : 'No message provided'}
-    Donation Date: ${date}
+    Donation Date: ${formattedDate}
     Contributions Count: ${contributionsCount}
     Publish Name: ${publish_name ? 'Yes' : 'No'}
-`;
+  `;
 
   // Create the HTML content for the client (donor)
   const clientMailContent = `
-<div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
-  <h2 style="color: #4CAF50;">Thank You, ${first_name}!</h2>
-  <p>
-    Dear ${first_name},<br><br>
-    Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
-    We have received your contribution on <strong>${date}</strong>, and it will go a long way in helping those affected by the flood.
-  </p>
-  <p>
-    If you have any further thoughts or messages, feel free to reach out to us at 
-    <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50;">${process.env.ADMIN_EMAIL}</a>. 
-    We truly appreciate your support.
-  </p>
-  <div style="border-top: 1px solid #ddd; margin-top: 20px; padding-top: 10px;">
-    <p style="font-size: 12px; color: #777;">
-      Warm regards,<br>
-      <strong>Nepal Flood Relief Team</strong><br>
-      <a href="https://nepal-flood-support.vercel.app/" style="color: #4CAF50;">Visit our website</a>
-    </p>
+  <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; background-image: url('https://source.unsplash.com/random/800x600'); background-size: cover; padding: 20px;">
+    <div style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px;">
+      <h2 style="color: #4CAF50;">Thank You, ${donorFirstName}!</h2>
+      <p>
+        Dear ${donorFirstName},<br><br>
+        Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
+        We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
+      </p>
+      ${thoughts ? `<p>Your message: "${thoughts}"</p>` : ''}
+      <p>
+        If you have any further thoughts or messages, feel free to reach out to us at 
+        <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50;">${
+    process.env.ADMIN_EMAIL
+  }</a>. 
+        We truly appreciate your support.
+      </p>
+      <div style="border-top: 1px solid #ddd; margin-top: 20px; padding-top: 10px;">
+        <p style="font-size: 12px; color: #777;">
+          Warm regards,<br>
+          <strong>Nepal Flood Relief Team</strong><br>
+          <a href="https://nepal-flood-support.vercel.app/" style="color: #4CAF50;">Visit our website</a>
+        </p>
+      </div>
+    </div>
   </div>
-</div>
-`;
+  `;
 
   const adminMailOptions = {
     from: email,
     to: process.env.ADMIN_EMAIL,
-    subject: `New Donation from ${first_name} ${last_name}`,
+    subject: `New Donation from ${donorFirstName} ${last_name || ''}`,
     text: adminMailContent,
   };
 
-  // Mail options for the client (HTML email)
   const clientMailOptions = {
     from: process.env.EMAIL,
-    to: email, // Send to donor's email
-    subject: `Thank You for Your Donation, ${first_name}!`,
-    html: clientMailContent, // Send HTML content instead of plain text
+    to: email,
+    subject: `Thank You for Your Donation, ${donorFirstName}!`,
+    html: clientMailContent,
   };
 
   // Send both emails (to admin and client)
