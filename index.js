@@ -59,29 +59,43 @@ app.post('/send-email', (req, res) => {
   `;
 
   const clientMailContent = `
-  <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; padding: 20px; background: url('https://nepal-flood-support-image-server.onrender.com/images/thankyou.webp') no-repeat center center; background-size: cover;">
-    <div style="padding: 30px; max-width: 900px; margin: 0 auto;">
-      <h2 style="color: #4CAF50; text-align: center;">Thank You, ${donorFirstName}!</h2>
-      <p style="color: #333; font-size: 16px;">
-        Dear ${donorFirstName},<br><br>
-        Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
-        We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
+<div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; padding: 0; background: url('https://nepal-flood-support-image-server.onrender.com/images/thankyou.webp') no-repeat center center; background-size: cover; height: 100%; min-height: 100vh; width: 100%;">
+
+  <!-- Ensure the text overlays the image and is centered -->
+  <div style="padding: 50px; max-width: 900px; margin: 0 auto; text-align: center; color: #333;">
+    
+    <!-- Heading with text shadow for better visibility -->
+    <h2 style="color: #4CAF50; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); font-size: 28px;">
+      Thank You, ${donorFirstName}!
+    </h2>
+
+    <!-- Donation message -->
+    <p style="color: #333; font-size: 18px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 5px; display: inline-block;">
+      Dear ${donorFirstName},<br><br>
+      Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
+      We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
+    </p>
+
+    <!-- Email and support message -->
+    <p style="color: #333; font-size: 18px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 5px; display: inline-block;">
+      If you have any further thoughts or messages, feel free to reach out to us at 
+      <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>. 
+      We truly appreciate your support.
+    </p>
+
+    <!-- Footer with website link -->
+    <div style="border-top: 1px solid #ddd; margin-top: 30px; padding-top: 10px;">
+      <p style="font-size: 14px; color: #777; text-align: center;">
+        Warm regards,<br>
+        <strong>Nepal Flood Relief Team</strong><br>
+        <a href="https://nepal-flood-support.vercel.app/" style="color: #4CAF50; text-decoration: none;">Visit our website</a>
       </p>
-      
-      <p style="color: #333; font-size: 16px;">
-        If you have any further thoughts or messages, feel free to reach out to us at 
-        <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>. 
-        We truly appreciate your support.
-      </p>
-      <div style="border-top: 1px solid #ddd; margin-top: 30px; padding-top: 10px;">
-        <p style="font-size: 14px; color: #777; text-align: center;">
-          Warm regards,<br>
-          <strong>Nepal Flood Relief Team</strong><br>
-          <a href="https://nepal-flood-support.vercel.app/" style="color: #4CAF50; text-decoration: none;">Visit our website</a>
-        </p>
-      </div>
     </div>
+
   </div>
+
+</div>
+
 `;
 
   const adminMailOptions = {
