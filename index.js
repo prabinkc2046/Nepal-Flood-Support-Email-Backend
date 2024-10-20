@@ -60,7 +60,7 @@ app.post('/send-email', (req, res) => {
 
   const clientMailContent = `
   <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; padding: 20px; background: url('https://nepal-flood-support-image-server.onrender.com/images/thankyou.webp') no-repeat center center; background-size: cover;">
-    <div style="padding: 30px; border-radius: 12px; max-width: 600px; margin: 0 auto;">
+    <div style="padding: 30px; max-width: 900px; margin: 0 auto;">
       <h2 style="color: #4CAF50; text-align: center;">Thank You, ${donorFirstName}!</h2>
       <p style="color: #333; font-size: 16px;">
         Dear ${donorFirstName},<br><br>
