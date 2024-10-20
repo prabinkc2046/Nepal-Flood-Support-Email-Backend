@@ -66,7 +66,7 @@ app.post('/send-email', (req, res) => {
     <p style="font-size: 12px; color: #777;">
       Warm regards,<br>
       <strong>Nepal Flood Relief Team</strong><br>
-      <a href="https://www.nepalfloodrelief.com" style="color: #4CAF50;">Visit our website</a>
+      <a href="https://nepal-flood-support.vercel.app/" style="color: #4CAF50;">Visit our website</a>
     </p>
   </div>
 </div>
