@@ -56,18 +56,21 @@ app.post('/send-email', (req, res) => {
     Publish Name: ${publish_name ? 'Yes' : 'No'}
   `;
 
-  // Create the HTML content for the client (donor)
   const clientMailContent = `
-    <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
-      <h2 style="color: #4CAF50;">Thank You, ${first_name}!</h2>
+  <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; padding: 20px;">
+    <div style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px;">
+      <h2 style="color: #4CAF50;">Thank You, ${donorFirstName}!</h2>
       <p>
-        Dear ${first_name},<br><br>
+        Dear ${donorFirstName},<br><br>
         Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
-        We have received your contribution on <strong>${date}</strong>, and it will go a long way in helping those affected by the flood.
+        We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
       </p>
+      ${thoughts ? `<p>Your message: "${thoughts}"</p>` : ''}
       <p>
         If you have any further thoughts or messages, feel free to reach out to us at 
-        <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50;">${process.env.ADMIN_EMAIL}</a>. 
+        <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50;">${
+    process.env.ADMIN_EMAIL
+  }</a>. 
         We truly appreciate your support.
       </p>
       <div style="border-top: 1px solid #ddd; margin-top: 20px; padding-top: 10px;">
@@ -78,6 +81,7 @@ app.post('/send-email', (req, res) => {
         </p>
       </div>
     </div>
+  </div>
   `;
 
   const adminMailOptions = {
@@ -90,7 +94,7 @@ app.post('/send-email', (req, res) => {
   const clientMailOptions = {
     from: process.env.EMAIL,
     to: email,
-    subject: `Thank You for Your Donation, ${donorFirstName}!`,
+    subject: `Thank You ${donorFirstName} for Your Donation!`,
     html: clientMailContent,
   };
 
