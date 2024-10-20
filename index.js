@@ -37,6 +37,8 @@ app.post('/send-email', (req, res) => {
     publish_name,
   } = req.body;
 
+  const imageUrl = `${process.env.IMAGE_SERVER_URL}/images/thankyou.webp`;
+
   // Use "Valued Donor" if first_name is not provided
   const donorFirstName = first_name || 'Valued Donor';
 
@@ -57,7 +59,7 @@ app.post('/send-email', (req, res) => {
   `;
 
   const clientMailContent = `
-  <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; padding: 20px; background: url('https://nepal-flood-support-image-server.onrender.com/images/thankyou.webp') no-repeat center center; background-size: cover;">
+  <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; padding: 20px; background: url('${imageUrl}') no-repeat center center; background-size: cover;">
     <div style="background-color: rgba(255, 255, 255, 0.85); padding: 30px; border-radius: 12px; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
       <h2 style="color: #4CAF50; text-align: center;">Thank You, ${donorFirstName}!</h2>
       <p style="color: #333; font-size: 16px;">
