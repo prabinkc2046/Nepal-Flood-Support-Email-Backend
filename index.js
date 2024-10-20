@@ -15,6 +15,10 @@ const PORT = process.env.PORT || 5000; // Use environment variable for port
 app.use(cors({ origin: process.env.CLIENT_URL })); // Allow requests from React frontend
 app.use(bodyParser.json());
 
+const capitaliseFirstLetter = str => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -40,7 +44,7 @@ app.post('/send-email', (req, res) => {
   const imageUrl = `${process.env.IMAGE_SERVER_URL}/images/thankyou.webp`;
 
   // Use "Valued Donor" if first_name is not provided
-  const donorFirstName = first_name || 'Valued Donor';
+  const donorFirstName = capitaliseFirstLetter(first_name || 'Valued Donor');
 
   // Format the donation date in a user-friendly format (e.g., "October 1, 2024")
   const formattedDate = moment(date).format('MMMM D, YYYY');
@@ -70,14 +74,14 @@ app.post('/send-email', (req, res) => {
     </h2>
 
     <!-- Donation message -->
-    <p style="color: #333; font-size: 18px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 5px; display: inline-block;">
+    <p style="color: #333; font-size: 18px; display: inline-block;">
       Dear ${donorFirstName},<br><br>
       Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
       We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
     </p>
 
     <!-- Email and support message -->
-    <p style="color: #333; font-size: 18px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 5px; display: inline-block;">
+    <p style="color: #333; font-size: 18px; display: inline-block;">
       If you have any further thoughts or messages, feel free to reach out to us at 
       <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>. 
       We truly appreciate your support.
