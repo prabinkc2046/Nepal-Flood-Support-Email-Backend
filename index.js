@@ -56,7 +56,7 @@ app.post('/send-email', (req, res) => {
 
   // Create the HTML content for the client (donor)
   const clientMailContent = `
-  <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; background-image: url('https://source.unsplash.com/random/800x600'); background-size: cover; padding: 20px;">
+  <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; background-image: url('https://via.placeholder.com/800x600'); background-size: cover; padding: 20px;">
     <div style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px;">
       <h2 style="color: #4CAF50;">Thank You, ${donorFirstName}!</h2>
       <p>
