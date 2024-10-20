@@ -60,25 +60,17 @@ app.post('/send-email', (req, res) => {
 
   const clientMailContent = `
   <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; padding: 20px; background: url('https://nepal-flood-support-image-server.onrender.com/images/thankyou.webp') no-repeat center center; background-size: cover;">
-    <div style="background-color: rgba(255, 255, 255, 0.85); padding: 30px; border-radius: 12px; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+    <div style="padding: 30px; border-radius: 12px; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #4CAF50; text-align: center;">Thank You, ${donorFirstName}!</h2>
       <p style="color: #333; font-size: 16px;">
         Dear ${donorFirstName},<br><br>
         Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
         We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
       </p>
-      ${
-        thoughts
-          ? `<p style="color: #333; font-style: italic;">Your message: "${thoughts}"</p>`
-          : ''
-      }
+      
       <p style="color: #333; font-size: 16px;">
         If you have any further thoughts or messages, feel free to reach out to us at 
-        <a href="mailto:${
-          process.env.ADMIN_EMAIL
-        }" style="color: #4CAF50; text-decoration: none;">${
-    process.env.ADMIN_EMAIL
-  }</a>. 
+        <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>. 
         We truly appreciate your support.
       </p>
       <div style="border-top: 1px solid #ddd; margin-top: 30px; padding-top: 10px;">
