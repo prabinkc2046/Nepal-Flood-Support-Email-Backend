@@ -74,7 +74,7 @@ app.post('/send-email', (req, res) => {
     <!-- Image of the cute little girl -->
     <div style="margin-bottom: 20px;">
       <img
-        src="https://nepal-flood-support-image-server.onrender.com/images/cuteLittleGirlx150.webp"
+        src='${imageUrl}'
         alt="Thank you background"
         style="max-width: 150px; border-radius: 50%;"
       />
