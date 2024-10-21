@@ -69,21 +69,21 @@ app.post('/send-email', (req, res) => {
   <div style="padding: 50px; max-width: 900px; margin: 0 auto; text-align: center; color: #333;">
     
     <!-- Heading with text shadow for better visibility -->
-    <h2 style="color: #4CAF50; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); font-size: 28px;">
+    <h2 style="color: #fff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); font-size: 28px;">
       Thank You, ${donorFirstName}!
     </h2>
 
     <!-- Donation message -->
-    <p style="color: #4CAF50; font-size: 18px; display: inline-block;">
+    <p style="color: #fff; font-size: 18px; display: inline-block;">
       Dear ${donorFirstName},<br><br>
       Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
       We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
     </p>
 
     <!-- Email and support message -->
-    <p style="color: #4CAF50; font-size: 18px; display: inline-block;">
+    <p style="color: #fff; font-size: 18px; display: inline-block;">
       If you have any further thoughts or messages, feel free to reach out to us at 
-      <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #000000; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>. 
+      <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>. 
       We truly appreciate your support.
     </p>
 
@@ -92,7 +92,7 @@ app.post('/send-email', (req, res) => {
       <p style="font-size: 14px; color: #777; text-align: center;">
         Warm regards,<br>
         <strong>Nepal Flood Relief Team</strong><br>
-        <a href="https://nepal-flood-support.vercel.app/" style="color: #4CAF50; text-decoration: none;">Visit our website</a>
+        <a href="https://nepal-flood-support.vercel.app/" style="color: #fff; text-decoration: none;">Visit our website</a>
       </p>
     </div>
 
