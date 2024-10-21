@@ -74,14 +74,14 @@ app.post('/send-email', (req, res) => {
     </h2>
 
     <!-- Donation message -->
-    <p style="color: #333; font-size: 18px; display: inline-block;">
+    <p style="color: #000000; font-size: 18px; display: inline-block;">
       Dear ${donorFirstName},<br><br>
       Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
       We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
     </p>
 
     <!-- Email and support message -->
-    <p style="color: #333; font-size: 18px; display: inline-block;">
+    <p style="color: #000000; font-size: 18px; display: inline-block;">
       If you have any further thoughts or messages, feel free to reach out to us at 
       <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>. 
       We truly appreciate your support.
@@ -99,6 +99,7 @@ app.post('/send-email', (req, res) => {
   </div>
 
 </div>
+
 
 `;
 
