@@ -2,6 +2,8 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const moment = require('moment');
+const fs = require('fs');
+const path = require('path');
 
 const cors = require('cors');
 
@@ -27,8 +29,18 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Email route to handle form submission
+// Function to read and convert the image to base64
+const getBase64Image = filePath => {
+  try {
+    const image = fs.readFileSync(filePath); // Read image file
+    return `data:image/webp;base64,${image.toString('base64')}`; // Convert to base64 string
+  } catch (error) {
+    console.error('Error reading image:', error);
+    return null;
+  }
+};
 
+// Email route to handle form submission
 app.post('/send-email', (req, res) => {
   const {
     first_name,
@@ -41,7 +53,9 @@ app.post('/send-email', (req, res) => {
     publish_name,
   } = req.body;
 
-  const imageUrl = `${process.env.IMAGE_SERVER_URL}/images/thankyou.webp`;
+  // Path to the local image (ensure you place the image in the right folder)
+  const imagePath = path.join(__dirname, 'public/images/thankyou.webp');
+  const base64Image = getBase64Image(imagePath); // Convert image to base64
 
   // Use "Valued Donor" if first_name is not provided
   const donorFirstName = capitaliseFirstLetter(first_name || 'Valued Donor');
@@ -62,52 +76,44 @@ app.post('/send-email', (req, res) => {
     Publish Name: ${publish_name ? 'Yes' : 'No'}
   `;
 
+  // Create the client email content (HTML) with embedded base64 image
   const clientMailContent = `
-  <div style="margin-top: 40px; padding: 30px; background-color: #e0f7fa; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); text-align: center;">
-    <!-- Top overlay with thank you message -->
-    <div style="padding-bottom: 20px;">
-      <h2 style="font-size: 1.8rem; color: #333; margin-bottom: 20px;">
-        Thank You, ${donorFirstName}!
-      </h2>
-    </div>
-  
-    <!-- Image of the cute little girl -->
-    <div style="margin-bottom: 20px;">
-      <img
-        src='${imageUrl}'
-        alt="Thank you background"
-        style="max-width: 150px; border-radius: 50%;"
-      />
-    </div>
-  
-    <!-- Thank you message -->
-    <div style="padding-bottom: 20px;">
-      <p style="font-size: 1.1rem; color: #555;">
-        Dear ${donorFirstName},<br><br>
-        Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
-        We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
-      </p>
-    </div>
-  
-    <!-- Email and support message -->
-    <div style="padding-bottom: 20px;">
-      <p style="font-size: 1.1rem; color: #555;">
-        If you have any further thoughts or messages, feel free to reach out to us at 
-        <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>.
-        We truly appreciate your support.
-      </p>
-    </div>
-  
-    <!-- Footer with website link -->
-    <div style="border-top: 1px solid #ddd; margin-top: 30px; padding-top: 10px;">
-      <p style="font-size: 14px; color: #777; text-align: center;">
-        Warm regards,<br>
-        <strong>Nepal Flood Relief Team</strong><br>
-        <a href="https://nepal-flood-support.vercel.app/" style="color: #fff; text-decoration: none;">Visit our website</a>
-      </p>
-    </div>
-  </div>
-  `;
+   <div style="margin-top: 40px; padding: 30px; background-color: #e0f7fa; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); text-align: center;">
+     <div style="padding-bottom: 20px;">
+       <h2 style="font-size: 1.8rem; color: #333; margin-bottom: 20px;">
+         Thank You, ${donorFirstName}!
+       </h2>
+     </div>
+     <div style="margin-bottom: 20px;">
+       <img
+         src="${base64Image}"
+         alt="Thank you background"
+         style="max-width: 150px; border-radius: 50%;"
+       />
+     </div>
+     <div style="padding-bottom: 20px;">
+       <p style="font-size: 1.1rem; color: #555;">
+         Dear ${donorFirstName},<br><br>
+         Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
+         We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
+       </p>
+     </div>
+     <div style="padding-bottom: 20px;">
+       <p style="font-size: 1.1rem; color: #555;">
+         If you have any further thoughts or messages, feel free to reach out to us at 
+         <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>.
+         We truly appreciate your support.
+       </p>
+     </div>
+     <div style="border-top: 1px solid #ddd; margin-top: 30px; padding-top: 10px;">
+       <p style="font-size: 14px; color: #777; text-align: center;">
+         Warm regards,<br>
+         <strong>Nepal Flood Relief Team</strong><br>
+         <a href="https://nepal-flood-support.vercel.app/" style="color: #fff; text-decoration: none;">Visit our website</a>
+       </p>
+     </div>
+   </div>
+ `;
 
   const adminMailOptions = {
     from: email,
