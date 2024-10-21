@@ -63,30 +63,41 @@ app.post('/send-email', (req, res) => {
   `;
 
   const clientMailContent = `
-<div style="font-family: Arial, sans-serif; line-height: 1.6; padding: 0; background: url('https://nepal-flood-support-image-server.onrender.com/images/thankyou.webp') no-repeat center center; background-size: cover; height: 100%; min-height: 100vh; width: 100%;">
-
-  <!-- Ensure the text overlays the image and is centered -->
-  <div style="padding: 50px; max-width: 900px; margin: 0 auto; text-align: center; color: #333;">
-    
-    <!-- Heading with text shadow for better visibility -->
-    <h2 style="color: #fff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); font-size: 28px;">
-      Thank You, ${donorFirstName}!
-    </h2>
-
-    <!-- Donation message -->
-    <p style="color: #fff; font-size: 18px; display: inline-block;">
-      Dear ${donorFirstName},<br><br>
-      Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
-      We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
-    </p>
-
+  <div style="margin-top: 40px; padding: 30px; background-color: #e0f7fa; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); text-align: center;">
+    <!-- Top overlay with thank you message -->
+    <div style="padding-bottom: 20px;">
+      <h2 style="font-size: 1.8rem; color: #333; margin-bottom: 20px;">
+        Thank You, ${donorFirstName}!
+      </h2>
+    </div>
+  
+    <!-- Image of the cute little girl -->
+    <div style="margin-bottom: 20px;">
+      <img
+        src="https://nepal-flood-support-image-server.onrender.com/images/cuteLittleGirlx150.webp"
+        alt="Thank you background"
+        style="max-width: 150px; border-radius: 50%;"
+      />
+    </div>
+  
+    <!-- Thank you message -->
+    <div style="padding-bottom: 20px;">
+      <p style="font-size: 1.1rem; color: #555;">
+        Dear ${donorFirstName},<br><br>
+        Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
+        We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
+      </p>
+    </div>
+  
     <!-- Email and support message -->
-    <p style="color: #fff; font-size: 18px; display: inline-block;">
-      If you have any further thoughts or messages, feel free to reach out to us at 
-      <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>. 
-      We truly appreciate your support.
-    </p>
-
+    <div style="padding-bottom: 20px;">
+      <p style="font-size: 1.1rem; color: #555;">
+        If you have any further thoughts or messages, feel free to reach out to us at 
+        <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>.
+        We truly appreciate your support.
+      </p>
+    </div>
+  
     <!-- Footer with website link -->
     <div style="border-top: 1px solid #ddd; margin-top: 30px; padding-top: 10px;">
       <p style="font-size: 14px; color: #777; text-align: center;">
@@ -95,13 +106,8 @@ app.post('/send-email', (req, res) => {
         <a href="https://nepal-flood-support.vercel.app/" style="color: #fff; text-decoration: none;">Visit our website</a>
       </p>
     </div>
-
   </div>
-
-</div>
-
-
-`;
+  `;
 
   const adminMailOptions = {
     from: email,
