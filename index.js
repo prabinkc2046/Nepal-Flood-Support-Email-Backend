@@ -63,7 +63,7 @@ app.post('/send-email', (req, res) => {
   `;
 
   const clientMailContent = `
-<div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; padding: 0; background: url('https://nepal-flood-support-image-server.onrender.com/images/thankyou.webp') no-repeat center center; background-size: cover; height: 100%; min-height: 100vh; width: 100%;">
+<div style="font-family: Arial, sans-serif; line-height: 1.6; padding: 0; background: url('https://nepal-flood-support-image-server.onrender.com/images/thankyou.webp') no-repeat center center; background-size: cover; height: 100%; min-height: 100vh; width: 100%;">
 
   <!-- Ensure the text overlays the image and is centered -->
   <div style="padding: 50px; max-width: 900px; margin: 0 auto; text-align: center; color: #333;">
@@ -74,16 +74,16 @@ app.post('/send-email', (req, res) => {
     </h2>
 
     <!-- Donation message -->
-    <p style="color: #000000; font-size: 18px; display: inline-block;">
+    <p style="color: #4CAF50; font-size: 18px; display: inline-block;">
       Dear ${donorFirstName},<br><br>
       Thank you for your generous donation of <strong>$${amount}</strong> towards the Nepal Flood Relief efforts.
       We have received your contribution on <strong>${formattedDate}</strong>, and it will go a long way in helping those affected by the flood.
     </p>
 
     <!-- Email and support message -->
-    <p style="color: #000000; font-size: 18px; display: inline-block;">
+    <p style="color: #4CAF50; font-size: 18px; display: inline-block;">
       If you have any further thoughts or messages, feel free to reach out to us at 
-      <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #4CAF50; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>. 
+      <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #000000; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>. 
       We truly appreciate your support.
     </p>
 
